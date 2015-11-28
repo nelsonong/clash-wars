@@ -2,25 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/Users/Parth/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-android/1.7.1/454871d4783564f17959bf9247660e7f56ecc4ab/gdx-backend-android-1.7.1.jar"
+        jar="/home/nelson/Downloads/clash-wars/core/build/libs/core-1.0.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="454871d4783564f17959bf9247660e7f56ecc4ab">
-        <dex dex="/Users/Parth/Downloads/clash-wars/android/build/intermediates/pre-dexed/debug/gdx-backend-android-1.7.1-cd195e4618cb58e7dfb94551ce54ca792b6eba36.jar" />
-    </item>
-    <item
-        jar="/Users/Parth/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.7.1/2179cc613447c297623a4a6d2ba6692c3aaff804/gdx-1.7.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="2179cc613447c297623a4a6d2ba6692c3aaff804">
-        <dex dex="/Users/Parth/Downloads/clash-wars/android/build/intermediates/pre-dexed/debug/gdx-1.7.1-b946015176c97441af5100d29a98c657bf57df03.jar" />
-    </item>
-    <item
-        jar="/Users/Parth/Downloads/clash-wars/core/build/libs/core-1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="c617286b731f7faa0550b68f34ed7248a9e330cb">
-        <dex dex="/Users/Parth/Downloads/clash-wars/android/build/intermediates/pre-dexed/debug/core-1.0-b2caab29ba2c06684b58e34182dd9754dd59a8b8.jar" />
+        sha1="420f92f1d73974dc53b12907d8077b89a8639db1">
+        <dex dex="/home/nelson/Downloads/clash-wars/android/build/intermediates/pre-dexed/debug/core-1.0-35d55221fa31c0d8f5c5f03fc826a039a9881c3a.jar" />
     </item>
 
 </items>

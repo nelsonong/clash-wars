@@ -3,9 +3,13 @@ package com.clashwars.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.clashwars.game.GameRenderer;
+import com.clashwars.game.GameWorld;
 
 
 public class MenuScreen implements Screen{
+    GameRenderer renderer = new GameRenderer(new GameWorld());
+
     @Override
     public void show() {
         Gdx.app.log("GameScreen", "Attached");
@@ -17,6 +21,7 @@ public class MenuScreen implements Screen{
         Gdx.gl.glClearColor(10/255.0f, 15/255.0f, 230/255.0f, 1f);
         // Fills the screen with the selected color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        renderer.render(delta);
     }
 
     @Override

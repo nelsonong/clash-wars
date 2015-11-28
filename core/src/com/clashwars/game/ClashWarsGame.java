@@ -12,19 +12,21 @@ import com.clashwars.side.AssetLoader;
 
 public class ClashWarsGame extends Game {
 
+	private MenuScreen menu;
 	private GameScreen game;
 
 	@Override
 	public void create () {
 
 		AssetLoader.load();
+		menu = new MenuScreen();
 		game = new GameScreen();
-		setScreen(game);
+		setScreen(menu);
 	}
 
 	@Override
 	public void render () {
-		game.render(0.1f);
+		menu.render(0.1f);
 	}
 
 	@Override

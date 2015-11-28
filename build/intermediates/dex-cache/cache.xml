@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/Users/Parth/Downloads/clash-wars/core/build/libs/core-1.0.jar"
+        jar="/home/nelson/Downloads/clash-wars/core/build/libs/core-1.0.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="c9bde3d55ef5210d2d643e3c7d6f9181767d517a">
-        <dex dex="/Users/Parth/Downloads/clash-wars/android/build/intermediates/pre-dexed/debug/core-1.0-b2caab29ba2c06684b58e34182dd9754dd59a8b8.jar" />
+        sha1="622b6d364595bfe7fc89832add12e1817b9ef8ab">
+        <dex dex="/home/nelson/Downloads/clash-wars/android/build/intermediates/pre-dexed/debug/core-1.0-35d55221fa31c0d8f5c5f03fc826a039a9881c3a.jar" />
     </item>
 
 </items>

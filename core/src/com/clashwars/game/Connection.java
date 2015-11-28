@@ -19,9 +19,10 @@ public class Connection {
     Socket socket;
 
     Connection(){
+        SocketHints hints = new SocketHints();
         // Attempt to connect socket with server
         try {
-            socket = Gdx.net.newClientSocket(Net.Protocol.TCP, SERVER, PORT, new SocketHints());
+            socket = Gdx.net.newClientSocket(Net.Protocol.TCP, SERVER, PORT, hints);
         } catch(Exception e){
             e.printStackTrace();
         }

@@ -18,7 +18,7 @@ public class Connection {
     // Socket that handles communication with the server
     Socket socket;
 
-    Connection(){
+    public Connection(){
         SocketHints hints = new SocketHints();
         // Attempt to connect socket with server
         try {

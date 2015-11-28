@@ -5,10 +5,15 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.clashwars.game.GameRenderer;
 import com.clashwars.game.GameWorld;
+import com.clashwars.side.MenuInputHandler;
 
 
-public class MenuScreen implements Screen{
+public class MenuScreen implements Screen {
     GameRenderer renderer = new GameRenderer(new GameWorld());
+
+    public MenuScreen() {
+        Gdx.input.setInputProcessor(new MenuInputHandler());
+    }
 
     @Override
     public void show() {

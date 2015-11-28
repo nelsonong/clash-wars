@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 public class MenuScreen implements Screen{
     @Override
     public void show() {
-
+        Gdx.app.log("GameScreen", "Attached");
     }
 
     @Override
@@ -21,26 +21,26 @@ public class MenuScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
-
+        Gdx.app.log("GameScreen", "resizing");
     }
 
     @Override
     public void pause() {
-
+        Gdx.app.log("GameScreen", "show called");
     }
 
     @Override
     public void resume() {
-
+        Gdx.app.log("GameScreen", "hide called");
     }
 
     @Override
     public void hide() {
-
+        Gdx.app.log("GameScreen", "pause called");
     }
 
     @Override
     public void dispose() {
-
+        Gdx.app.log("GameScreen", "resume called");
     }
 }

@@ -17,10 +17,10 @@ public class ClashWarsGame extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+
 		//Connection c = new Connection();
 		menu = new MenuScreen();
 		setScreen(menu);
-
 	}
 
 	@Override

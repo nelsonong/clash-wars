@@ -14,7 +14,6 @@ public class ClashWarsGame extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
-		Connection c = new Connection();
 	}
 
 	@Override

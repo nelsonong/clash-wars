@@ -3,17 +3,40 @@ package com.clashwars.side;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.clashwars.game.ClashWarsGame;
 import com.clashwars.game.Connection;
 import com.clashwars.screens.GameScreen;
 
-public class MenuInputHandler implements InputProcessor {
-    public Connection connection = null;
+public class GameInputHandler implements InputProcessor {
     public Game game;
+    public Connection connection;
 
-    public MenuInputHandler(Game game){
+    public GameInputHandler(final Game game, Connection c){
         this.game = game;
-    }
+        this.connection = c;
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    String response = connection.read();
+
+                    if(response == null) {
+                        continue;
+                    }
+                    else if(response == "998") {
+                        Gdx.app.log("thread","lose code recieved");
+                    }
+                    else if(response == "999"){
+                        Gdx.app.log("thread","win code recieved");
+                    } else {
+                        ClashWarsGame g = new ClashWarsGame(game);
+                        ((GameScreen)g.screen).renderer.setPercent(Integer.parseInt(response));
+                    }
+                }
+            }
+        });
+    }
     @Override
     public boolean keyDown(int keycode) {
         return false;
@@ -31,18 +54,7 @@ public class MenuInputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        // After connection, display 'waiting for matchmaking message'.
-        if(connection == null) {
-            connection = new Connection();
-            String confirmMsg = new String("");
-            confirmMsg = connection.read();
-
-            if("200".equals(confirmMsg)) {
-                game.setScreen(new GameScreen(game));
-                Gdx.input.setInputProcessor(new GameInputHandler(game, connection));
-                Gdx.app.log("queue", confirmMsg);
-            }
-        }
+        connection.write("1");
         return true;
     }
 

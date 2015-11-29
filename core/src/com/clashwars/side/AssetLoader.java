@@ -10,18 +10,23 @@ import java.util.Arrays;
 
 
 public class AssetLoader {
-    public static Texture background, gokuSheet, buuSheet, gokuBeam, buuBeam, gokuClashSheet, buuClashSheet;
+    public static Texture background, gokuSheet, buuSheet, gokuBeam, buuBeam, gokuClashSheet, buuClashSheet, title, clouds,win,loss;
     public static Animation gokuAnimation, buuAnimation, gokuClashAnimation, buuClashAnimation;
     public static TextureRegion[] gokuFrames, buuFrames, gokuClash, buuClash;
 
     public static void load(){
-        background = new Texture(Gdx.files.internal("background.jpg"));
+        background = new Texture(Gdx.files.internal("bg.jpg"));
         gokuSheet = new Texture(Gdx.files.internal("goku.png"));
         buuSheet = new Texture(Gdx.files.internal("kidbuu.png"));
         buuBeam = new Texture(Gdx.files.internal("kidbuu_light.png"));
         gokuBeam = new Texture(Gdx.files.internal("light.png"));
         gokuClashSheet = new Texture(Gdx.files.internal("goku_fire.png"));
         buuClashSheet = new Texture(Gdx.files.internal("kidbuu_fire.png"));
+        title = new Texture(Gdx.files.internal("Title.png"));
+        clouds = new Texture(Gdx.files.internal("cloud.png"));
+        win = new Texture(Gdx.files.internal("winner.png"));
+        loss = new Texture(Gdx.files.internal("loser.png"));
+
         gokuFrames = new TextureRegion[21];
         gokuClash = new TextureRegion[2];
         buuFrames = new TextureRegion[21];
@@ -38,11 +43,11 @@ public class AssetLoader {
             buuFrames[buuFrames.length-i-1] = new TextureRegion(buuSheet,PARSE_INT*i,0,PARSE_INT,buuSheet.getHeight());
         }
 
-        final float FRAME_SPEED = 0.75f;
+        final float FRAME_SPEED = 1.5f;
         gokuAnimation = new Animation(FRAME_SPEED,gokuFrames);
         buuAnimation = new Animation(FRAME_SPEED,buuFrames);
 
-        final float SLOW_RATE = 4.0f;
+        final float SLOW_RATE = 4.5f;
         gokuClashAnimation = new Animation(SLOW_RATE,gokuClash);
         buuClashAnimation = new Animation(SLOW_RATE,buuClash);
     }

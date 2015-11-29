@@ -32,7 +32,7 @@ public class ClashWarsGame extends Game {
 	public void create() {
 
 		AssetLoader.load();
-		screen = new MenuScreen(this);
+		screen = new MenuScreen(this,0);
 		setScreen(screen);
 	}
 

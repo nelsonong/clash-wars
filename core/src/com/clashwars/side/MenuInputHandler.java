@@ -35,13 +35,18 @@ public class MenuInputHandler implements InputProcessor {
         if(connection == null) {
             connection = new Connection();
             String confirmMsg = new String("");
-            confirmMsg = connection.read();
 
-            if("200".equals(confirmMsg)) {
-                game.setScreen(new GameScreen(game));
-                Gdx.input.setInputProcessor(new GameInputHandler(game, connection));
-                Gdx.app.log("queue", confirmMsg);
+            while(true) {
+                confirmMsg = connection.read();
+                if("200".equals(confirmMsg)) {
+                    break;
+                }
             }
+            Gdx.app.log("read()", "END OF WHILE");
+            GameScreen s = new GameScreen(game, connection);
+            game.setScreen(new GameScreen(game,connection));
+            Gdx.input.setInputProcessor(new GameInputHandler(game,connection,s.renderer));
+            Gdx.app.log("read()", confirmMsg);
         }
         return true;
     }

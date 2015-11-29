@@ -1,6 +1,7 @@
 package com.clashwars.game;
 
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -8,9 +9,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.clashwars.screens.MenuScreen;
 import com.clashwars.side.AssetLoader;
+import com.clashwars.side.GameInputHandler;
 
 import java.io.Console;
+import java.io.InterruptedIOException;
 
 public class GameRenderer {
     // Screen Display Constants
@@ -23,12 +27,12 @@ public class GameRenderer {
     // Game World the Renderer renders
     private GameWorld world;
 
-
+    Game game;
     private SpriteBatch batch;
     private float stateTime;
     private TextureRegion currentStateGoku, currentStateBuu, currentGokuClash, currentBuuClash;
     private int initCounter = -1;
-    private int percent = 0;
+    public int percent = 0;
     int goku_x = (int) (0.025f*WIDTH),
             goku_y = (int) (0.075f*HEIGHT),
             goku_width = (int) (0.22f*WIDTH),
@@ -54,21 +58,27 @@ public class GameRenderer {
             buuClash_y = (int) ((0.75)*buu_y),
             buuClash_width = (int)(0.25f*seperation),
             buuClash_height = (int) buu_height;
+    public boolean percentIsChangeable = false;
+    public Connection c;
 
 
 
 
-    public GameRenderer(GameWorld world){
+    public GameRenderer(Game game, GameWorld world, Connection c){
         this.world = world;
         camera = new OrthographicCamera(WIDTH, HEIGHT);
 
         batch = new SpriteBatch();
 
         stateTime = 0f;
+
+        //Gdx.input.setInputProcessor(null);
+        this.c = c;
     }
 
     public void render(float delta){
-        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        Gdx.app.log("RENDER", String.valueOf(percent));
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         batch.begin();
         batch.draw(AssetLoader.background,0,0,WIDTH,HEIGHT);
         stateTime += delta;
@@ -77,6 +87,8 @@ public class GameRenderer {
 
         batch.draw(currentStateGoku,goku_x,goku_y,goku_width, buu_height);
         batch.draw(currentStateBuu,buu_x,buu_y,buu_width,buu_height);
+
+        batch.draw(AssetLoader.clouds,stateTime/1000,(int)(HEIGHT/1.5));
 
         if(initCounter != -1 ){
             gokuBeam_width = (int) (seperation*percent/100f);
@@ -112,6 +124,7 @@ public class GameRenderer {
                 batch.draw(AssetLoader.buuBeam,buuBeam_x-buuBeam_width,buuBeam_y,buuBeam_width,buuBeam_height);
 
                 if(percent == 50){
+                    percentIsChangeable = true;
                     currentGokuClash = AssetLoader.gokuClashAnimation.getKeyFrame(stateTime,true);
                     currentBuuClash = AssetLoader.buuClashAnimation.getKeyFrame(stateTime,true);
 
@@ -120,11 +133,10 @@ public class GameRenderer {
                     initCounter = 1;
                 }
         }
-
     }
 
     public void setPercent(int percent){
-        this.percent = percent;
+        if(percentIsChangeable) this.percent = percent;
     }
 
 }

@@ -16,15 +16,17 @@ public class MenuScreen implements Screen {
     // Screen Display Constants
     public static final int WIDTH = (int) (Gdx.graphics.getWidth());
     public static final int HEIGHT = (int)(Gdx.graphics.getHeight());
+    int result;
 
     Game game;
     private OrthographicCamera camera;
 
 
-    public MenuScreen(Game game) {
+    public MenuScreen(Game game, int result) {
         Gdx.input.setInputProcessor(new MenuInputHandler(game));
         this.game = game;
         camera = new OrthographicCamera(WIDTH, HEIGHT);
+        this.result = result;
     }
 
     @Override
@@ -38,6 +40,10 @@ public class MenuScreen implements Screen {
         SpriteBatch batch = new SpriteBatch();
         batch.begin();
         batch.draw(AssetLoader.background,0,0,WIDTH,HEIGHT);
+
+        if(result == 1)    batch.draw(AssetLoader.win,WIDTH/2,(int)(HEIGHT/1.5));
+        if(result == -1)   batch.draw(AssetLoader.loss,WIDTH/2,(int)(HEIGHT/1.5));
+        if(result == 0)    batch.draw(AssetLoader.title,WIDTH/2,(int)(HEIGHT/1.5));
         batch.end();
     }
 

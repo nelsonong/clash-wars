@@ -6,13 +6,15 @@ import com.badlogic.gdx.Net;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Connection {
     // Server variables
     public static final String SERVER = "52.26.111.207";
-    public static final int PORT = 2201;
+    public static final int PORT = 2200;
 
     // Socket that handles communication with the server
     Socket socket;
@@ -33,8 +35,7 @@ public class Connection {
 
 
         try { // Attempt to write to socket's output stream
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            out.write(message.getBytes());
+            socket.getOutputStream().write(message.getBytes());
         } catch(IOException e){
             e.printStackTrace();
         }
@@ -42,17 +43,12 @@ public class Connection {
 
     public String read(){
         String response = null; // Holds the response
-        int MAX_BUFFER_SIZE = 3;
 
-        while(response == null) {
-            try { // Attempt to read socket's input stream
-                byte[] bytes = new byte[MAX_BUFFER_SIZE];
-                 socket.getInputStream().read(bytes);
-                response = new String(bytes);
-                Gdx.app.log("read()",response);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            response = new BufferedReader(new InputStreamReader(socket.getInputStream())).readLine();
+            Gdx.app.log("read()",response);
+        } catch(IOException e){
+
         }
 
         return response;

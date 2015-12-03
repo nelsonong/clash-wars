@@ -40,10 +40,10 @@ public class MenuScreen implements Screen {
         SpriteBatch batch = new SpriteBatch();
         batch.begin();
         batch.draw(AssetLoader.background,0,0,WIDTH,HEIGHT);
-
-        if(result == 1)    batch.draw(AssetLoader.win,WIDTH/2,(int)(HEIGHT/1.5));
-        if(result == -1)   batch.draw(AssetLoader.loss,WIDTH/2,(int)(HEIGHT/1.5));
-        if(result == 0)    batch.draw(AssetLoader.title,WIDTH/2,(int)(HEIGHT/1.5));
+//
+//        if(result == 1)    batch.draw(AssetLoader.win,WIDTH/2,(int)(HEIGHT/1.5));
+//        if(result == -1)   batch.draw(AssetLoader.loss,WIDTH/2,(int)(HEIGHT/1.5));
+//        if(result == 0)    batch.draw(AssetLoader.title,WIDTH/2,(int)(HEIGHT/1.5));
         batch.end();
     }
 

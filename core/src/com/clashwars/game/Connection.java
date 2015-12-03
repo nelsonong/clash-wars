@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 
 public class Connection {
     // Server variables
-    public static final String SERVER = "52.26.111.207";
+    public static final String SERVER = "52.35.78.239";
     public static final int PORT = 2200;
 
     // Socket that handles communication with the server

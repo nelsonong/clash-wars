@@ -110,8 +110,23 @@ void clientThread(int clientNo, Communication::Socket *client, int *tracker, boo
     std::thread shutdown_thread(triggerClientShutdown, killClient, client);
 
     while(!*killClient){
+        try{
             client->Read(message);
             std::cout<< message.ToString();
+        } catch(std::exception e){
+            if(clientNo == 1){
+                tapMutex->lock();
+                *tracker = 0;
+                tapMutex->unlock();
+            } else {
+                tapMutex->lock();
+                *tracker = 100;
+                tapMutex->unlock();
+            }
+
+            *killClient = true;
+            break;
+        }
 
         if(clientNo == 1){
             tapMutex->lock();

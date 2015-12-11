@@ -35,12 +35,16 @@ public class GameInputHandler implements InputProcessor {
                     }
                     else if( "998".equals(response)) {
                         Gdx.app.log("thread","lose code recieved");
-                        game.setScreen(new MenuScreen(game,-1));
+                        connection.dispose();
+                        connection = null;
+                        game.setScreen(new MenuScreen(game,-1,connection));
                         break;
                     }
                     else if("999".equals(response)){
                         Gdx.app.log("thread","win code recieved");
-                        game.setScreen(new MenuScreen(game,1));
+                        connection.dispose();
+                        connection = null;
+                        game.setScreen(new MenuScreen(game,1,connection));
                         break;
                     } else {
                         ClashWarsGame g = new ClashWarsGame(game);

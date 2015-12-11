@@ -7,11 +7,12 @@ import com.clashwars.game.Connection;
 import com.clashwars.screens.GameScreen;
 
 public class MenuInputHandler implements InputProcessor {
-    public Connection connection = null;
+    public Connection connection;
     public Game game;
 
-    public MenuInputHandler(Game game){
+    public MenuInputHandler(Game game, Connection c){
         this.game = game;
+        this.connection = c;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class MenuInputHandler implements InputProcessor {
         // After connection, display 'waiting for matchmaking message'.
         if(connection == null) {
             connection = new Connection();
-            String confirmMsg = new String("");
+            String confirmMsg = "";
 
             while(true) {
                 confirmMsg = connection.read();

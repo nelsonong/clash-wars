@@ -12,6 +12,7 @@ import com.clashwars.screens.MenuScreen;
 import com.clashwars.side.AssetLoader;
 
 public class ClashWarsGame extends Game {
+	public Connection connection = null;
 
 	public ClashWarsGame(){
 
@@ -32,7 +33,7 @@ public class ClashWarsGame extends Game {
 	public void create() {
 
 		AssetLoader.load();
-		screen = new MenuScreen(this,0);
+		screen = new MenuScreen(this,0,connection);
 		setScreen(screen);
 	}
 
@@ -43,6 +44,8 @@ public class ClashWarsGame extends Game {
 
 	@Override
 	public void dispose() {
+//		if(connection != null)
+//			connection.write("-1");
 		super.dispose();
 		AssetLoader.dispose();
 	}

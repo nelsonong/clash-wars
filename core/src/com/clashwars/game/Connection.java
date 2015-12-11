@@ -13,11 +13,11 @@ import java.io.InputStreamReader;
 
 public class Connection {
     // Server variables
-    public static final String SERVER = "52.35.78.239";
+    public static final String SERVER = "52.35.91.17";
     public static final int PORT = 2200;
 
     // Socket that handles communication with the server
-    Socket socket;
+    Socket socket = null;
 
     public Connection(){
         SocketHints hints = new SocketHints();
@@ -47,10 +47,15 @@ public class Connection {
         try {
             response = new BufferedReader(new InputStreamReader(socket.getInputStream())).readLine();
             Gdx.app.log("read()",response);
-        } catch(IOException e){
-
+        } catch(Exception e){
+            e.printStackTrace();
         }
 
         return response;
+    }
+
+    public void dispose(){
+        if(socket != null)
+            socket.dispose();
     }
 }

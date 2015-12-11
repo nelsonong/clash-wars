@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.clashwars.game.Connection;
 import com.clashwars.game.GameRenderer;
 import com.clashwars.game.GameWorld;
 import com.clashwars.side.AssetLoader;
@@ -13,6 +14,7 @@ import com.clashwars.side.MenuInputHandler;
 
 
 public class MenuScreen implements Screen {
+
     // Screen Display Constants
     public static final int WIDTH = (int) (Gdx.graphics.getWidth());
     public static final int HEIGHT = (int)(Gdx.graphics.getHeight());
@@ -22,8 +24,8 @@ public class MenuScreen implements Screen {
     private OrthographicCamera camera;
 
 
-    public MenuScreen(Game game, int result) {
-        Gdx.input.setInputProcessor(new MenuInputHandler(game));
+    public MenuScreen(Game game, int result, Connection c) {
+        Gdx.input.setInputProcessor(new MenuInputHandler(game,c));
         this.game = game;
         camera = new OrthographicCamera(WIDTH, HEIGHT);
         this.result = result;

@@ -40,7 +40,6 @@ class Socket : public Blockable
 {
 private:
     sockaddr_in socketDescriptor;
-    bool open;
     Event terminator;
 public:
     Socket(std::string const & ipAddress, unsigned int port);
@@ -48,6 +47,7 @@ public:
     Socket(Socket const & s);
     Socket & operator=(Socket const & s);
     ~Socket(void);
+    bool open;
 
     int Open(void);
     int Write(ByteArray const & buffer);

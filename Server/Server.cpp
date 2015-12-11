@@ -59,8 +59,8 @@ void GameThread(Communication::Socket *client1, Communication::Socket *client2, 
     std::mutex *tapMutex = new std::mutex();
 
 
-    clientThreads.push_back(new std::thread(clientThread, 1, client1, tracker, killClient, tapMutex));
-    clientThreads.push_back(new std::thread(clientThread, 2, client2, tracker, killClient, tapMutex));
+    clientThreads.push_back(new std::thread(clientThread, 1, client1, tracker, killClient));
+    clientThreads.push_back(new std::thread(clientThread, 2, client2, tracker, killClient));
 
     while(!*kill){
         if(*tracker <= MIN_TRACKER){
@@ -99,9 +99,11 @@ void GameThread(Communication::Socket *client1, Communication::Socket *client2, 
 
     client1->Close();
     client2->Close();
+    std::cout << "game thread end\n";
+
 }
 
-void clientThread(int clientNo, Communication::Socket *client, int *tracker, bool *killClient, std::mutex *tapMutex){
+void clientThread(int clientNo, Communication::Socket *client, int *tracker, bool *killClient){
     int response;
     const int INCREMENT = 4;
     Communication::ByteArray message("");
@@ -111,19 +113,13 @@ void clientThread(int clientNo, Communication::Socket *client, int *tracker, boo
 
     while(!*killClient){
         try{
+            while(!(client->open) && !*killClient){ // Checks for termination
+                std::this_thread::sleep_for(std::chrono::milliseconds(250));
+            }
+
             client->Read(message);
             std::cout<< message.ToString();
         } catch(std::exception e){
-            if(clientNo == 1){
-                tapMutex->lock();
-                *tracker = 0;
-                tapMutex->unlock();
-            } else {
-                tapMutex->lock();
-                *tracker = 100;
-                tapMutex->unlock();
-            }
-
             *killClient = true;
             break;
         }
@@ -160,7 +156,9 @@ void connectionThread(bool* kill){
 
         try{
             // Blocks until a connection is attempted
+            std::cout << "waiting for clients\n";
             socket = new Communication::Socket(connectionSocket.Accept());
+            std::cout << "found one!\n";
             openSockets.push_back(socket);
 
         } catch(int e) {
@@ -174,19 +172,24 @@ void connectionThread(bool* kill){
 
         if(openSockets.size() >= 2){
             std::cout << "Found two clients\n";
-        // Create a game thread when there are more than two clients waiting.
-        // Assign the first two sockets to local variables and remove them
-        // from the deque.
-            Communication::Socket *client1 = openSockets.front();
+            // Create a game thread when there are more than two clients waiting.
+            // Assign the first two sockets to local variables and remove them
+            // from the deque.
+            Communication::Socket *client1;
+            Communication::Socket *client2;
+
+            client1 = openSockets.front();
             openSockets.pop_front();
+            client2 = openSockets.front();
+            openSockets.pop_front();
+
             std::cout << "client 1 write\n";
             client1->Write(Communication::ByteArray("200\n")); //Messages client1.
-            Communication::Socket *client2 = openSockets.front();
-            openSockets.pop_front();
             std::cout << "client 2 write\n";
             client2->Write(Communication::ByteArray("200\n")); //Messages client2.
             std::thread *new_thread = new std::thread(GameThread, client1, client2, kill);
             rThreads.push_back(new_thread);
+
         }
     }
 
@@ -215,10 +218,11 @@ void triggerShutdown(bool *kill, Communication::SocketServer *c){
     c->Shutdown();
 }
 
-void triggerClientShutdown(bool *kill, Communication::Socket *c){
+void triggerClientShutdown(bool *killClient, Communication::Socket *c){
     int refresh_interval = 500; // refresh interval to check for termination
-    while(!(*kill)) // Checks for termination
+    while(!(*killClient)){ // Checks for termination
         std::this_thread::sleep_for(std::chrono::milliseconds(refresh_interval));
+    }
 
     // Shutdown SocketServer
     c->Close();

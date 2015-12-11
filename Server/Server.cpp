@@ -26,6 +26,9 @@ void triggerClientShutdown(bool *kill, Communication::Socket *c);
 // Client handler.
 void clientThread(int clientNo, Communication::Socket *client, int *tracker, bool *killClient, std::mutex *tapMutex);
 
+// Checks to see if client threads are still active.
+void timeoutCheck(Communication::Socket* client1,int timeout, boolean &killVar)
+
 int main(){
     bool kill = false; // Used to terminate all active threads
     std::string killResponse; // Used to initate termination process
@@ -236,4 +239,10 @@ void triggerClientShutdown(bool *kill, Communication::Socket *c){
 
     // Shutdown SocketServer
     c->Close();
+}
+
+void timeoutCheck(Communication::Socket* client1,int timeout, boolean &killVar){
+	std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
+	if(killVar == false)
+		client1->Close();
 }

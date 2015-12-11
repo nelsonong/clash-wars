@@ -119,7 +119,7 @@ void clientThread(int clientNo, Communication::Socket *client, int *tracker, boo
             while(!(client->open) && !*killClient){ // Checks for termination
                 std::this_thread::sleep_for(std::chrono::milliseconds(250));
             }
-
+    
             client->Read(message);
             std::cout<< message.ToString();
         } catch(std::exception e){
@@ -200,7 +200,7 @@ void connectionThread(bool* kill){
                 continue;       //If client terminates before game starts, look for another client.
             }
             kill = true;
-        
+
             Communication::Socket *client2 = openSockets.front();
             openSockets.pop_front();
             bool kill2 = false;

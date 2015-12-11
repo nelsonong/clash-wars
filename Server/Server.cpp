@@ -174,17 +174,31 @@ void connectionThread(bool* kill){
 
         if(openSockets.size() >= 2){
             std::cout << "Found two clients\n";
-        // Create a game thread when there are more than two clients waiting.
-        // Assign the first two sockets to local variables and remove them
-        // from the deque.
+            // Create a game thread when there are more than two clients waiting.
+            // Assign the first two sockets to local variables and remove them
+            // from the deque.
             Communication::Socket *client1 = openSockets.front();
             openSockets.pop_front();
+            bool kill = false;
+            std::thread * check_thread = new std::thread(timeoutCheck, client1, 3000, kill);
             std::cout << "client 1 write\n";
             client1->Write(Communication::ByteArray("200\n")); //Messages client1.
+            if (client1->Read() == 0) {
+                continue;       //If client terminates before game starts, look for another client.
+            }
+            kill = true;
+        
             Communication::Socket *client2 = openSockets.front();
             openSockets.pop_front();
+            bool kill2 = false;
+            std::thread * check_thread2 = new std::thread(timeoutCheck, client2, 3000, kill2);
             std::cout << "client 2 write\n";
             client2->Write(Communication::ByteArray("200\n")); //Messages client2.
+            if (client2->Read() == 0) {
+                openSockets.push_front(client1);    //If 2nd client terminates before game starts, add 1st client back to deque.
+                continue;                           // Continue looking for another client.
+            }
+            kill2 = true;
             std::thread *new_thread = new std::thread(GameThread, client1, client2, kill);
             rThreads.push_back(new_thread);
         }

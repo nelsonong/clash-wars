@@ -114,6 +114,9 @@ void clientThread(int clientNo, Communication::Socket *client, int *tracker, boo
 
     while(!*killClient){
         try{
+        	while(!(client->open) && !*killClient) // Checks for termination
+                std::this_thread::sleep_for(std::chrono::milliseconds(250));
+          
             client->Read(message);
             std::cout<< message.ToString();
         } catch(std::exception e){

@@ -5,7 +5,7 @@
         jar="/Users/Parth/Downloads/clash-wars/core/build/libs/core-1.0.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="cff6206f5a9294abe572a9d478e2605dc0078db7">
+        sha1="c24bcc66b692ef0ec331d0ac5dff658b24293098">
         <dex dex="/Users/Parth/Downloads/clash-wars/android/build/intermediates/pre-dexed/debug/core-1.0-b2caab29ba2c06684b58e34182dd9754dd59a8b8.jar" />
     </item>
 
